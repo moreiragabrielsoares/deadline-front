@@ -25,7 +25,7 @@ function SingUpPage() {
     const request = axios.post(`${backUrl}signup`, singUpObj);
 
     request.then(() => {
-      navigate("/processes");
+      navigate("/login");
     });
 
     request.catch((error) => {
