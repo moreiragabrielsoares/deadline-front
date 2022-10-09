@@ -2,7 +2,7 @@ import { React, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
-import { ThreeDots } from "react-loader-spinner";
+import { Triangle } from "react-loader-spinner";
 import { backUrl } from "../utils/constants";
 
 function SingUpPage() {
@@ -66,7 +66,15 @@ function SingUpPage() {
 
           {isFormDisabled ? (
             <FormButton type="submit" disabled={isFormDisabled}>
-              <ThreeDots color="#FFFFFF" height={50} width={50} />
+              <Triangle
+                height="30"
+                width="50"
+                color="#ffffff"
+                ariaLabel="triangle-loading"
+                wrapperStyle={{}}
+                wrapperClassName=""
+                visible={true}
+              />
             </FormButton>
           ) : (
             <FormButton type="submit" disabled={isFormDisabled}>
