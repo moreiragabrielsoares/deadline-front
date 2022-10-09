@@ -24,16 +24,19 @@ function SingUpPage() {
 
     const request = axios.post(`${backUrl}signup`, singUpObj);
 
-    request.then(() => {
-      navigate("/login");
-    });
+    request.then(signUpSuccess);
+    request.catch(signUpFail);
 
-    request.catch((error) => {
+    function signUpSuccess() {
+      navigate("/login");
+    }
+
+    function signUpFail(error) {
       alert(error.response.data);
       setIsFormDisabled(false);
       setUserEmail("");
       setUserPassword("");
-    });
+    }
   }
 
   return (
