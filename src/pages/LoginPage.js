@@ -24,12 +24,17 @@ function LoginPage() {
 
     const request = axios.post(`${backUrl}login`, loginObj);
 
-    request.then(() => {
-      navigate("/processes");
-    });
+    request.then(loginSuccess);
+    request.catch(loginFail);
 
-    request.catch((error) => {
-      alert(error.response.data);
+    function loginSuccess(res) {
+      const { token } = res.data;
+      const sessionData = { token };
+      localStorage.setItem("sessionData", JSON.stringify(sessionData));
+      navigate("/");
+    }
+
+    function loginFail(error) {
       setIsFormDisabled(false);
       setUserEmail("");
       setUserPassword("");
