@@ -38,7 +38,8 @@ function LoginPage() {
       setIsFormDisabled(false);
       setUserEmail("");
       setUserPassword("");
-    });
+      alert(error.response.data);
+    }
   }
 
   return (
