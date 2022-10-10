@@ -82,11 +82,13 @@ function ProcessesPage() {
             <ProcessesCardsContainer>
               {processes.map((process) => (
                 <ProcessCard
-                  key={process.Id}
+                  key={process.id}
+                  processId={process.id}
                   processNumber={process.processNumber}
                   task={process.task}
                   deadline={process.deadline}
                   priorityLevel={process.priorityLevel}
+                  setProcesses={setProcesses}
                 ></ProcessCard>
               ))}
             </ProcessesCardsContainer>
