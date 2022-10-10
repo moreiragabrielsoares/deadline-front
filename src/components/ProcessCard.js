@@ -54,6 +54,36 @@ function ProcessCard({
     alert(error.response.data);
   }
 
+  function updateProcessCard(processId) {
+    const sessionData = JSON.parse(localStorage.getItem("sessionData"));
+    const config = headerConfig(sessionData?.token);
+    const promisse = axios.put(
+      `${backUrl}processes`,
+      { id: processId },
+      config
+    );
+    promisse.then(updateSuccess);
+    promisse.catch(updateFail);
+  }
+
+  function updateSuccess() {
+    const sessionData = JSON.parse(localStorage.getItem("sessionData"));
+    const config = headerConfig(sessionData?.token);
+    const promisse = axios.get(`${backUrl}processes`, config);
+    promisse.then(getProcessesSuccess);
+    promisse.catch(getProcessesFail);
+    function getProcessesSuccess(res) {
+      setProcesses(res.data);
+    }
+    function getProcessesFail(error) {
+      console.log(error.response.data);
+    }
+  }
+
+  function updateFail(error) {
+    alert(error.response.data);
+  }
+
   return (
     <CardContainer>
       <LeftContainer>
@@ -86,6 +116,7 @@ function ProcessCard({
             size={"2em"}
             color={"#80cc72"}
             style={{ cursor: "pointer" }}
+            onClick={() => updateProcessCard(processId)}
           ></AiOutlineCheckCircle>
         </CheckContainer>
         <AiOutlineDelete
