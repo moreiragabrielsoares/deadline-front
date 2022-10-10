@@ -86,31 +86,33 @@ function ProcessCard({
 
   return (
     <CardContainer>
-      <LeftContainer>
-        <ProcessNumberContainer>
-          <LabelLine>Número do Processo</LabelLine>
-          <ProcessNumberLine>{processNumber}</ProcessNumberLine>
-        </ProcessNumberContainer>
-        <TaskContainer>
-          <LabelLine>Tarefa</LabelLine>
-          <TaskLine>{task}</TaskLine>
-        </TaskContainer>
-      </LeftContainer>
-      <MiddleContainer>
-        <DeadlineContainer>
-          <LabelLine>Prazo</LabelLine>
-          <DeadlineLine>
-            {`${dayjs
-              .utc(deadline)
-              .format("DD/MM/YYYY")} (${daysRemaining} dias restantes)`}
-          </DeadlineLine>
-        </DeadlineContainer>
-        <PriorityContainer>
-          <LabelLine>Prioridade</LabelLine>
-          <PriorityLine>{priorityCorrelation[priorityLevel]}</PriorityLine>
-        </PriorityContainer>
-      </MiddleContainer>
-      <RightContainer>
+      <InfosContainer>
+        <LeftContainer>
+          <ProcessNumberContainer>
+            <LabelLine>Número do Processo</LabelLine>
+            <ProcessNumberLine>{processNumber}</ProcessNumberLine>
+          </ProcessNumberContainer>
+          <TaskContainer>
+            <LabelLine>Tarefa</LabelLine>
+            <TaskLine>{task}</TaskLine>
+          </TaskContainer>
+        </LeftContainer>
+        <RightContainer>
+          <DeadlineContainer>
+            <LabelLine>Prazo</LabelLine>
+            <DeadlineLine>
+              {dayjs.utc(deadline).format("DD/MM/YYYY")}&nbsp;
+              <span> {` (${daysRemaining} dias restantes)`}</span>
+            </DeadlineLine>
+          </DeadlineContainer>
+          <PriorityContainer>
+            <LabelLine>Prioridade</LabelLine>
+            <PriorityLine>{priorityCorrelation[priorityLevel]}</PriorityLine>
+          </PriorityContainer>
+        </RightContainer>
+      </InfosContainer>
+
+      <IconsContainer>
         <CheckContainer>
           <AiOutlineCheckCircle
             size={"2em"}
@@ -125,7 +127,7 @@ function ProcessCard({
           style={{ cursor: "pointer" }}
           onClick={() => deleteProcessCard(processId)}
         ></AiOutlineDelete>
-      </RightContainer>
+      </IconsContainer>
     </CardContainer>
   );
 }
@@ -133,37 +135,74 @@ function ProcessCard({
 export default ProcessCard;
 
 const CardContainer = styled.div`
-  min-width: 420px;
+  width: 460px;
   height: 130px;
   background-color: "#ffffff";
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   border: 2px solid #999999;
   border-radius: 5px;
   padding: 15px;
   margin: 5px;
+  @media (max-width: 600px) {
+    width: 330px;
+    height: 190px;
+    flex-direction: column;
+  }
+
+  @media (max-width: 300px) {
+    width: 270px;
+    height: 200px;
+    flex-direction: column;
+  }
+`;
+
+const InfosContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  @media (max-width: 600px) {
+    margin-bottom: 12px;
+  }
 `;
 
 const LeftContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-right: 60px;
-`;
-
-const MiddleContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-right: 30px;
+  margin-right: 40px;
+  @media (max-width: 600px) {
+    width: 210px;
+    margin-right: 20px;
+    justify-content: space-between;
+  }
 `;
 
 const RightContainer = styled.div`
   display: flex;
   flex-direction: column;
+  margin-right: 30px;
+  @media (max-width: 600px) {
+    margin-right: 0px;
+  }
+`;
+
+const IconsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  @media (max-width: 600px) {
+    flex-direction: row-reverse;
+    justify-content: right;
+  }
 `;
 
 const CheckContainer = styled.div`
   margin-top: 5px;
   margin-bottom: 20px;
+  @media (max-width: 600px) {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 10px;
+  }
 `;
 
 const ProcessNumberContainer = styled.div`
@@ -193,6 +232,9 @@ const DeadlineContainer = styled.div`
 
 const DeadlineLine = styled.div`
   display: flex;
+  @media (max-width: 600px) {
+    flex-wrap: wrap;
+  }
 `;
 
 const PriorityContainer = styled.div`
