@@ -3,8 +3,17 @@ import { AiOutlineCheckCircle, AiOutlineDelete } from "react-icons/ai";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 dayjs.extend(utc);
+import axios from "axios";
+import { backUrl, headerConfig } from "../utils/constants";
 
-function ProcessCard({ processNumber, task, deadline, priorityLevel }) {
+function ProcessCard({
+  processId,
+  processNumber,
+  task,
+  deadline,
+  priorityLevel,
+  setProcesses,
+}) {
   const priorityCorrelation = {
     p1: "Muito alta",
     p2: "Alta",
@@ -17,6 +26,33 @@ function ProcessCard({ processNumber, task, deadline, priorityLevel }) {
   const daysRemaining = Math.round(
     dayjs.utc(deadline).diff(currentDate) / ONE_DAY_MILLISECONDS
   );
+
+  function deleteProcessCard(processId) {
+    const sessionData = JSON.parse(localStorage.getItem("sessionData"));
+    const config = headerConfig(sessionData?.token);
+    config["data"] = { id: processId };
+    const promisse = axios.delete(`${backUrl}processes`, config);
+    promisse.then(deleteSuccess);
+    promisse.catch(deleteFail);
+  }
+
+  function deleteSuccess() {
+    const sessionData = JSON.parse(localStorage.getItem("sessionData"));
+    const config = headerConfig(sessionData?.token);
+    const promisse = axios.get(`${backUrl}processes`, config);
+    promisse.then(getProcessesSuccess);
+    promisse.catch(getProcessesFail);
+    function getProcessesSuccess(res) {
+      setProcesses(res.data);
+    }
+    function getProcessesFail(error) {
+      console.log(error.response.data);
+    }
+  }
+
+  function deleteFail(error) {
+    alert(error.response.data);
+  }
 
   return (
     <CardContainer>
@@ -56,6 +92,7 @@ function ProcessCard({ processNumber, task, deadline, priorityLevel }) {
           size={"2em"}
           color={"#777777"}
           style={{ cursor: "pointer" }}
+          onClick={() => deleteProcessCard(processId)}
         ></AiOutlineDelete>
       </RightContainer>
     </CardContainer>
