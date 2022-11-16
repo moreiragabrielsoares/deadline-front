@@ -1,3 +1,11 @@
+# Projeto Autoral de Controle de Prazos
+
+Link deploy: https://project-deadline-front.vercel.app/
+
+Front-end: Feito em React JS com styled components
+Back-end: Feito em Node.js utilizando a lib Express
+Database: Feito em PostgreSQL
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
